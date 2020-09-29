@@ -56,6 +56,14 @@
     --global-whitespace-lg: calc(var(--global-baseline) * 4); /*  = 32px */
     --global-whitespace-xl: calc(var(--global-whitespace) * 2); /*  = 48px */
     --global-whitespace-xxl: calc(var(--global-whitespace) * 3); /*  = 72px */
+
+    /* inputs */
+    --global-input-backgroundColor: White;
+    --global-input-color: var(--global-color-neutral-xxxx-dark);
+    --global-input-borderColor: var(--global-color-neutral-xxx-light);
+    --global-input-hover-borderColor: var(--global-color-neutral-xx-light);
+    --global-input-focus-borderColor: var(--global-color-alpha);
+    --global-input-boxShadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
 }
 
 /*------------------------------------*\
@@ -601,26 +609,27 @@ input::placeholder {
     -moz-appearance: none;
     appearance: none;
     width: 100%;
-    border: var(--global-borderWidth) solid var(--global-color-neutral-xxx-light);
+    border: var(--global-borderWidth) solid var(--global-input-borderColor);
     border-radius: var(--global-borderRadius);
     color: var(--global-color-neutral-xxxx-dark);
-    background-color: White;
+    background-color: var(--global-input-backgroundColor);
     font-family: inherit;
     font-size: 16px;
     line-height: calc(var(--global-baseline) * 3);
     padding: calc(var(--global-baseline) * 1.5 - var(--global-borderWidth)) var(--global-whitespace-md);
     outline: none;
     transition: border var(--global-transition-timing-alpha);
+    color: var(--global-input-color);
 }
 
 .c-input:hover {
-    border-color: var(--global-color-neutral-xx-light);
+    border-color: var(--global-input-hover-borderColor);
 }
 
 .c-input:focus,
 .c-input:active {
-    border-color: var(--global-color-alpha);
-    box-shadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
+    border-color: var(--global-input-focus-borderColor);
+    box-shadow: 0 0 0 3px var(--global-input-boxShadow);
 }
 
 /* option input for checkboxes and radio buttons */
@@ -679,6 +688,72 @@ input::placeholder {
     background-color: var(--global-color-alpha-dark);
     box-shadow: none;
 }
+
+/*
+    Component: Cutom options
+*/
+
+.c-custom-option{
+    display: flex;
+    padding: 3px;
+}
+
+.c-custom-option__symbol{
+    display: block;
+}
+
+.c-custom-option__fake-input{
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--global-color-neutral-xxx-light);
+    margin-right: 8px;
+    box-shadow: 0 0 0 3px var(--global-input-boxShadow);
+
+}
+
+.c-custom-option__fake-input--radio{
+    border-radius: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.c-custom-option__fake-input--checkbox{
+    border-radius: 3px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.c-custom-option__fake-input--checkbox .c-custom-option__symbol{
+    width: 10px;
+    height: 10px;
+    fill: var(--global-color-alpha);
+}
+
+.c-custom-option__fake-input--radio .c-custom-option__symbol{
+    width: 6px;
+    height: 6px;
+    background-color: var(--global-color-alpha);
+    border-radius: 100%;
+}
+
+.c-option--hidden:checked + .c-custom-option{
+    /*
+      Do magic stuff here, for example:
+      background-color: red;
+    */
+  }
+
+.c-option--hidden:checked + .c-custom-option .c-custom-option__symbol {
+    /* Kleur van checkbox SVG */
+    /*
+      Do magic stuff here, for example:
+      fill: blue;
+    */
+  }
+
+
 
 /*------------------------------------*\
 #UTILITIES
