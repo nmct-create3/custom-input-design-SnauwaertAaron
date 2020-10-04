@@ -39,6 +39,19 @@
     --global-color-neutral-xxx-dark: #35374d;
     --global-color-neutral-xxxx-dark: #20223a;
 
+    /* card */
+    --global-card-bodyColor:  White;
+    --global-card-topBorderColor: var(--global-color-neutral-xxx-light);
+    --global-card-titleColor: var(--global-color-neutral-xxxx-dark) ;
+
+    /* text */
+    --global-label-color: var(--global-color-neutral-xx-dark);
+
+    /* logo */
+    --global-logo-fontColor: var(--global-color-neutral-xxxx-dark);
+    --global-logo-innerCircleColor: var(--global-color-alpha);
+    --global-logo-outerCircleColor: var(--color-alpha-x-dark);
+
     /* border stuff */
     --global-borderRadius: 3px;
     --global-borderWidth: 1px;
@@ -58,13 +71,35 @@
     --global-whitespace-xxl: calc(var(--global-whitespace) * 3); /*  = 72px */
 
     /* inputs */
-    --global-input-backgroundColor: White;
+    --global-input-backgroundColor: var(--global-color-neutral-xxxx-light);
     --global-input-color: var(--global-color-neutral-xxxx-dark);
     --global-input-borderColor: var(--global-color-neutral-xxx-light);
     --global-input-hover-borderColor: var(--global-color-neutral-xx-light);
     --global-input-focus-borderColor: var(--global-color-alpha);
     --global-input-boxShadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
+    --global-input-transition-easein: all 300ms cubic-bezier(1.000, -0.005, 0.000, 1.000); /* custom */
 }
+
+@media (prefers-color-scheme: dark) {
+    :root{
+        --global-input-backgroundColor: var(--global-color-neutral-xxxx-dark);
+        --global-input-color: var(--global-color-neutral-xxxx-light);
+        --global-input-borderColor: var(--global-color-neutral-xxx-dark);
+        --global-input-hover-borderColor: var(--global-color-neutral-xx-dark);
+        --global-input-focus-borderColor: var(--global-color-alpha);
+
+        --global-card-bodyColor: #35374d;
+        --global-card-topBorderColor: var(--global-color-neutral-xxxx-dark);
+        --global-card-titleColor: White;
+        --global-label-color: #afb0bb;
+
+        --global-logo-fontColor: white;
+        --global-logo-innerCircleColor: white;
+        --global-logo-outerCircleColor: white;
+    }
+}
+
+
 
 /*------------------------------------*\
 #GENERIC
@@ -81,11 +116,13 @@ html {
     line-height: 1.5;
     font-family: "Inter Web", Helvetica, arial, sans-serif;
     color: var(--global-color-neutral-xxxx-dark);
-    background-color: var(--global-color-neutral-xxxx-light);
+    background-color: var(--global-input-backgroundColor);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;    
+    -moz-osx-font-smoothing: grayscale;
 }
+
+
 
 *,
 *:before,
@@ -236,7 +273,7 @@ input {
 }
 
 input::placeholder {
-    color: var(--global-color-neutral-x-light);
+    color: var(--global-input-color);
 }
 
 /*------------------------------------*\
@@ -522,15 +559,15 @@ input::placeholder {
 }
 
 .c-logo__path--1 {
-    fill: var(--global-color-neutral-xxxx-dark);
+    fill: var(--global-logo-fontColor);
 }
 
 .c-logo__path--2 {
-    fill: var(--global-color-alpha);
+    fill: var(--global-logo-innerCircleColor);
 }
 
 .c-logo__path--3 {
-    fill: var(--color-alpha-x-dark);
+    fill: var(--global-logo-outerCircleColor);
 }
 
 /*
@@ -540,7 +577,7 @@ input::placeholder {
 */
 
 .c-card {
-    background-color: White;
+    background-color: var(--global-card-bodyColor);
     margin-bottom: var(--global-whitespace);
     border-radius: var(--global-borderRadius);
     box-shadow: 0 0 0 var(--global-borderWidth) rgba(0,0,0, 0.05), 0 2px 4px rgba(0,0,0,.075);
@@ -555,7 +592,7 @@ input::placeholder {
 
 .c-card__footer {
     text-align: center;
-    border-top: var(--global-borderWidth) solid var(--global-color-neutral-xxx-light);
+    border-top: var(--global-borderWidth) solid var(--global-card-topBorderColor);
 }
 
 .c-card__title {
@@ -563,6 +600,7 @@ input::placeholder {
     font-size: 18px;
     line-height: calc(var(--global-baseline) * 3);
     font-weight: 600;
+    color: var(--global-card-titleColor);
 }
 
 /* This allows c-card__body and __footer to have equal padding everywhere */
@@ -649,7 +687,7 @@ input::placeholder {
     font-size: 14px;
     padding-bottom: var(--global-whitespace-xs);    
     line-height: calc(var(--global-baseline) * 2);
-    color: var(--global-color-neutral-xx-dark);
+    color: var(--global-label-color);
 }
 
 .c-label--option {
@@ -698,8 +736,16 @@ input::placeholder {
     padding: 3px;
 }
 
+.c-custom-option__fake-input:hover {
+    box-shadow: 0px 0px 0px 3px rgba(51,133,255,0.2);
+    border-color: #81ADF0;
+}
+
 .c-custom-option__symbol{
     display: block;
+    opacity: 0;
+    /* transition: opacity 0.5s; */
+    transition:  var(--global-input-transition-easein);
 }
 
 .c-custom-option__fake-input{
@@ -739,21 +785,21 @@ input::placeholder {
 }
 
 .c-option--hidden:checked + .c-custom-option{
-    /*
-      Do magic stuff here, for example:
-      background-color: red;
-    */
-  }
+    opacity: 1;
+}
 
 .c-option--hidden:checked + .c-custom-option .c-custom-option__symbol {
     /* Kleur van checkbox SVG */
-    /*
-      Do magic stuff here, for example:
-      fill: blue;
-    */
-  }
+    opacity: 1;
+}
 
+.c-option-list{
+    margin-bottom: 24px;
+}
 
+.c-option-list__item{
+    margin-bottom: 12px;
+}
 
 /*------------------------------------*\
 #UTILITIES
@@ -1110,9 +1156,13 @@ No media query since this is the default in mobile first design
         box-shadow: none !important;
         text-shadow: none !important;
     }
-    a,
+    a{
+        color:var(--global-color-alpha);
+        text-decoration: none;
+    }
     a:visited {
-        text-decoration: underline;
+        /* text-decoration: underline; */
+        text-decoration: none;
     }
     a[href]:after {
         content: " (" attr(href) ")";
@@ -1124,6 +1174,7 @@ No media query since this is the default in mobile first design
     * Don't show links that are fragment identifiers,
     * or use the `javascript:` pseudo protocol
     */
+
     a[href^="#"]:after,
     a[href^="javascript:"]:after {
         content: "";
@@ -1158,3 +1209,4 @@ No media query since this is the default in mobile first design
         page-break-after: avoid;
     }
 }
+
